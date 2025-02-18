@@ -1,9 +1,20 @@
 export default {
     PWD: process.cwd(),
     NODE_ENV: Bun.env["NODE_ENV"],
-    VERSION: Bun.env["VERSION"],
     TZ: Bun.env["TZ"],
-    PORT: Number(Bun.env["PORT"]) || 8000,
+    SERVICE_NAME: Bun.env["SERVICE_NAME"] || "myapp",
+    BASE_PATH: Bun.env["BASE_PATH"] || "api",
     HOST: Bun.env["HOST"] || "0.0.0.0",
-    BASE_PATH: Bun.env["BASE_PATH"] || "api"
+    PORT: Number(Bun.env["PORT"] || "8000"),
+    VERSION: Bun.env["VERSION"],
+    DB_HOST: Bun.env["DB_HOST"],
+    DB_PORT: Number(Bun.env["DB_PORT"] || "3306"),
+    DB_USER: Bun.env["DB_USER"],
+    DB_PASS: Bun.env["DB_PASS"],
+    DB_SCHEMA: Bun.env["DB_SCHEMA"],
+    ENCRYPTION_KEY: Bun.env["ENCRYPTION_KEY"],
+    JWT_PRIVATE_KEY: Bun.env["JWT_PRIVATE_KEY"] || "",
+    JWT_PUBLIC_KEY: Bun.env["JWT_PUBLIC_KEY"] || "",
+    QR_PRIVATE_KEY: Bun.env["QR_PRIVATE_KEY"] || "",
+    QR_PUBLIC_KEY: Bun.env["QR_PUBLIC_KEY"] || ""
 };
