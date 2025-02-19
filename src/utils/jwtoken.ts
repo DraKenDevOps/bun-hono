@@ -1,4 +1,4 @@
-import jwt, { type SignOptions, type VerifyOptions } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import type { JWTPayload } from "hono/utils/jwt/types";
 import type { Context, Next } from "hono";
 import env from "../env";
@@ -6,14 +6,14 @@ import env from "../env";
 const iss = "Laogw Ltd";
 const sub = "info@laogw.la";
 const aud = "https://www.laogw.la";
-const signOptions: SignOptions = {
+const signOptions: jwt.SignOptions = {
     issuer: iss,
     subject: sub,
     audience: aud,
     expiresIn: "24h",
     algorithm: "RS256"
 };
-const verifyOptions: VerifyOptions = {
+const verifyOptions: jwt.VerifyOptions = {
     issuer: iss,
     subject: sub,
     audience: aud,
