@@ -5,8 +5,8 @@ import env from "../env";
 
 const logDir = path.resolve(`${env.PWD}/logs`);
 fs.existsSync(logDir) || fs.mkdirSync(logDir);
-const logFile = path.resolve(`${logDir}/${env.SERVICE_NAME}.log`);
-const stream = fs.createWriteStream(logFile, "utf-8");
+const logpath = path.resolve(`${logDir}/${env.SERVICE_NAME}.log`);
+const stream = fs.createWriteStream(logpath, "utf-8");
 
 const customFormat = winston.format.combine(
     winston.format.timestamp(),
@@ -18,7 +18,7 @@ const customFormat = winston.format.combine(
             "@field": {
                 level: level.toUpperCase(),
                 // @ts-ignore
-                requestId: global["requestId"],
+                requestId: globalThis["requestId"],
                 ...meta
             }
         })
@@ -40,7 +40,9 @@ const logger = winston.createLogger({
         service: env.SERVICE_NAME,
         mode: env.NODE_ENV,
         tz: env.TZ,
-        version: env.VERSION
+        version: env.VERSION,
+        // @ts-ignore
+        requestId: globalThis["requestId"]
     }
 });
 

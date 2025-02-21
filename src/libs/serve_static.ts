@@ -17,22 +17,22 @@ const baseServeStatic = (options: ServeStaticOptions): MiddlewareHandler => {
         }
         let filename = decodeURI(c.req.path);
         if (!filename) {
-            return await next();
+            await next();
+            return;
         }
         const filepath = path.resolve(`${rootPath}/${filename}`);
         let content = await getContent(filepath);
+        if (!content) {
+            await next();
+            return;
+        }
         if (content instanceof Response) {
             return c.newResponse(content.body, content);
         }
-
-        if (content) {
-            const mimeType = (options.mimes && getMimeType(filepath, options.mimes)) || getMimeType(filepath);
-            c.header("Content-Type", mimeType || "application/octet-stream");
-            // @ts-ignore
-            return c.body(content);
-        }
-        await next();
-        return;
+        const mimeType = (options.mimes && getMimeType(filepath, options.mimes)) || getMimeType(filepath);
+        c.header("Content-Type", mimeType || "application/octet-stream");
+        // @ts-ignore
+        return c.body(content);
     };
 };
 
@@ -46,13 +46,9 @@ const getContent = async (filepath: string) => {
 const getMimeType = (filename: string, mimes: Record<string, string> = baseMimes): string | undefined => {
     const regexp = /\.([a-zA-Z0-9]+?)$/;
     const match = filename.match(regexp);
-    if (!match) {
-        return;
-    }
+    if (!match) return;
     let mimeType = mimes[match[1]];
-    if (mimeType && mimeType.startsWith("text")) {
-        mimeType += "; charset=utf-8";
-    }
+    if (mimeType && mimeType.startsWith("text")) mimeType += "; charset=utf-8";
     return mimeType;
 };
 const getExtension = (mimeType: string) => {

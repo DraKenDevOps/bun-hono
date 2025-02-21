@@ -25,7 +25,7 @@ async function logHttp(ctx: Context, next: Next, ignorePaths: string[] = []) {
     ctx.set("requestId", requestId);
     ctx.set("ipAddress", ip);
     // @ts-ignore
-    if (!global["requestId"]) global["requestId"] = requestId;
+    if (!globalThis["requestId"]) globalThis["requestId"] = requestId;
     const start = performance.now();
     await next();
     const time = performance.now() - start;

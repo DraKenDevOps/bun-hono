@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch src/index.ts",
+    "dev:hot": "bun --watch --hot src/index.ts",
     "serve": "pm2-runtime start ecosystem.config.js",
     "build": "bun build --minify src/index.ts --outfile dist/index.js --target bun",
     "build:exec": "bun build --compile --minify src/index.ts --outfile dist/index.js"
