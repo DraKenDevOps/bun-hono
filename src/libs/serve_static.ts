@@ -9,7 +9,15 @@ type ServeStaticOptions = {
     mimes?: Record<string, string>;
 };
 const baseServeStatic = (options: ServeStaticOptions): MiddlewareHandler => {
-    let rootPath = !options.root ? path.resolve(`${env.PWD}/public`) : options.root;
+    let rootPath = path.resolve(`${env.PWD}/public`);
+    if (options.root) {
+        if (options.root.includes("./")) {
+            rootPath = path.resolve(`${env.PWD}${options.root.replace(".", "")}`);
+        } else {
+            rootPath = options.root;
+        }
+    }
+    if (env.PWD !== "production") console.log("Serve static root path:", rootPath);
     return async (c, next) => {
         if (c.finalized) {
             await next();

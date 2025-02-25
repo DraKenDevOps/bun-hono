@@ -57,9 +57,12 @@ function captcha(width: number, height: number, dispNumber = "123456") {
         }
     }
     
+    const getBuffer = () => Buffer.from(p.getBase64(), "base64");
+
     return {
         color: p.color,
-        getBase64: p.getBase64
+        getBase64: p.getBase64,
+        getBuffer
     }
 }
 export default captcha;

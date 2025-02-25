@@ -24,9 +24,7 @@ export default function (width: number = 100, height: number = 30, depth: number
     const iend_offs = idat_offs + idat_size; // IEND offset and size (68 + 3053 = 3134)
     const iend_size = 4 + 4 + 4; // default = 12
     const buffer_size = iend_offs + iend_size; // total PNG size (3134 + 12 = 3146)
-
     console.log("total PNG size:", buffer_size);
-
     const buffer = new Array();
     const palette = new Object();
     let pindex = 0;
@@ -84,7 +82,6 @@ export default function (width: number = 100, height: number = 30, depth: number
 
     // export
     const color = function (red: number, green: number, blue: number, alpha: number) {
-        console.log(`input rgba(${red},${green},${blue},${alpha})`);
         alpha = alpha >= 0 ? alpha : 255;
         var color = (((((alpha << 8) | red) << 8) | green) << 8) | blue; // value = 1347440720
         // @ts-ignore

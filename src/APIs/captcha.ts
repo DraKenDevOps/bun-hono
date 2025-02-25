@@ -29,7 +29,7 @@ export async function initCaptchaImg(ctx: Context) {
     const img = captcha(100, 30, num);
     img.color(0, 0, 0, 0);
     img.color(80, 80, 80, 255);
-    const buf = Buffer.from(img.getBase64(), "base64");
+    const buf = img.getBuffer();
     ctx.header("Content-Type", "image/png");
     return ctx.body(buf);
 }
